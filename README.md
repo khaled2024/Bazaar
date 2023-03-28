@@ -2,7 +2,7 @@
 (BaZzar) is :-
 A native ios mobile application ,E-commerce application presents products from different Category that based on (dummyjson) API , provide customers with all functionalities and features they will need.
 
-Screens impelementation :-
+## Screens impelementation :-
 - Register, login, logout, Forget Password
 - Show product details (Name , Price , Brand , Description , Rate , Images, Category )
 - Search for a specific product
