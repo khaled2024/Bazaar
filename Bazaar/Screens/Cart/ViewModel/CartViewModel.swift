@@ -17,7 +17,7 @@ protocol CartViewModelDelegate: AnyObject {
     func didFetchCartCountSuccessful()
     func didFetchSingleProduct(_ product: Product)
     func didFetchCostAccToItemCount()
-    
+    func emprtyProductsMessage(error: String)
     
     func didCheckoutSuccessful()
     func didCheckoutNotSuccessful()
@@ -44,6 +44,7 @@ final class CartViewModel{
                 // empty logic
                 costAccToItemCount = [:]
                 cartProducts = []
+                self.delegate?.emprtyProductsMessage(error: "No Products! Please add some Products to your Cart 😁")
             }else{
                 fetchProductFromFirestoreCollection(cart: cart)
                 fetchCostAccToCount(cart: cart)
@@ -60,7 +61,7 @@ final class CartViewModel{
     }
     
     //MARK: - Get Cart from Firestore
-    
+    // 1.
     func fetchCart() {
         guard let currentUser = currentUser else { return }
         let cartRef = database.collection("Users").document(currentUser.uid)
@@ -68,6 +69,28 @@ final class CartViewModel{
             if let documentData = documentData {
                 self?.cart = documentData.get("cart") as? [String : Int]
                 self?.delegate?.didFetchCartCountSuccessful()
+            }
+        }
+    }
+    //MARK: - Fetch Product From FirestoreCollection to cartsProducts
+    // 2.
+    func fetchProductFromFirestoreCollection(cart: [String:Int]) {
+        let productsRef = database.collection("products")
+        for (id, _) in cart {
+            let product = productsRef.document(id)
+            product.getDocument(as: Product.self) { result in
+                switch result {
+                case .failure(let error):
+                    self.delegate?.errorHapped(error)
+                case .success(let product):
+                    guard let productId = product.id else { return }
+                    // if the cartProducts didnt contain (product.id == productId) then add this product
+                    if !self.cartProducts.contains(where: { product in
+                        return product.id == productId
+                    }) {
+                        self.cartProducts.append(product)
+                    }
+                }
             }
         }
     }
@@ -97,19 +120,15 @@ final class CartViewModel{
             }
         }
     }
-   
-    
     //MARK: - FetchCost according to ProductCount
     
     func fetchCostAccToCount(cart: [String: Int]) {
         let productsRef = database.collection("products")
-        
         for (id, quantity) in cart {
             let product = productsRef.document(id)
-            
+            // here we calcculate the cost of every item and added to (costAccToItemCount)
             product.getDocument { documentData, error in
                 guard let documentData = documentData  else { return }
-                
                 if documentData.exists == true {
                     var cost: Double = 0
                     guard let price = documentData.get("price") as? Double else { return }
@@ -122,10 +141,8 @@ final class CartViewModel{
             
         }
     }
-    
-    
     //MARK: - TotalCost
-    
+    // every cost on every item + to get the total cost
     var totalCost: Double {
         var total: Double = 0
         for (_, cost) in costAccToItemCount {
@@ -160,28 +177,7 @@ final class CartViewModel{
         }
         
     }
-    //MARK: - Fetch Product From FirestoreCollection to cartsProducts
-    
-    func fetchProductFromFirestoreCollection(cart: [String:Int]) {
-        let productsRef = database.collection("products")
-        
-        for (id, _) in cart {
-            let product = productsRef.document(id)
-            product.getDocument(as: Product.self) { result in
-                switch result {
-                case .failure(let error):
-                    self.delegate?.errorHapped(error)
-                case .success(let product):
-                    guard let productId = product.id else { return }
-                    if !self.cartProducts.contains(where: { product in
-                        return product.id == productId
-                    }) {
-                        self.cartProducts.append(product)
-                    }
-                }
-            }
-        }
-    }
+
     
     //MARK: - FetchSingleProduct
     
@@ -216,6 +212,4 @@ final class CartViewModel{
         cartProducts.remove(at: index)
         costAccToItemCount.removeValue(forKey: productId)
     }
-    
-    
 }

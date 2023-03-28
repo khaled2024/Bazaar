@@ -74,6 +74,8 @@ extension WishlistViewController: WishlistViewModelDelegate{
     
     func didFetchProductsFromWishListSuccessful() {
         DispatchQueue.main.async { [weak self] in
+            self?.wishlistView.wishlistCollection.isHidden = false
+            self?.wishlistView.wishlistEmptyImage.isHidden = true
             self?.wishlistView.wishlistCollection.reloadData()
         }
     }
@@ -88,7 +90,9 @@ extension WishlistViewController: WishlistViewModelDelegate{
     }
     
     func emprtyProductsMessage(error: String) {
-        Alert.alertMessage(title: "Error!", message: error, vc: self)
+        Alert.alertMessage(title: "Error❌", message: error, vc: self)
+        wishlistView.wishlistCollection.isHidden = true
+        wishlistView.wishlistEmptyImage.isHidden = false
     }
     
    

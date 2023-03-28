@@ -11,6 +11,7 @@ final class WishlistView: UIView{
     
     
     var wishlistCollection = CustomCollection(backgroundColor: .backgroundColor, showsScrollIndicator: false, paging: false, layout: UICollectionViewFlowLayout(), scrollDirection: .vertical)
+    var wishlistEmptyImage = CustomImageView(image: UIImage(named: "emptyWishlist"), bacgroundColor: .backgroundColor, contentMode: .scaleAspectFit)
     deinit {
         print("WishlistView deinit successfully")
     }
@@ -19,6 +20,8 @@ final class WishlistView: UIView{
         backgroundColor = .backgroundColor
         addSubview()
         setupConstraints()
+        wishlistEmptyImage.isHidden = true
+        wishlistCollection.isHidden = false
     }
     
     required init?(coder: NSCoder) {
@@ -32,24 +35,29 @@ extension WishlistView {
     //MARK: - AddSubview
     
     private func addSubview() {
-        addSubview(wishlistCollection)
+        addSubViews([wishlistCollection,wishlistEmptyImage])
     }
     
     //MARK: - SetupConstraints
     
     private func setupConstraints() {
-        wishListCollectionConstraints()
+        wishListCollectionAndImageConstraints()
     }
     
     
     //MARK: - UI Elements Constraints
     
-    private func wishListCollectionConstraints() {
+    private func wishListCollectionAndImageConstraints() {
         wishlistCollection.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide)
             make.leading.equalTo(safeAreaLayoutGuide).offset(10)
             make.trailing.equalTo(safeAreaLayoutGuide).offset(-10)
             make.bottom.equalTo(safeAreaLayoutGuide)
+        }
+        wishlistEmptyImage.snp.makeConstraints { make in
+            make.width.height.equalTo(300)
+            make.centerX.equalTo(safeAreaLayoutGuide.snp.centerX)
+            make.centerY.equalTo(safeAreaLayoutGuide.snp.centerY).offset(-30)
         }
     }
     

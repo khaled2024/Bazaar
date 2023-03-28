@@ -26,6 +26,7 @@ class CartViewController: UIViewController {
         cartViewModel.fetchCart()
         cartView.priceLabel.text = "$\(cartViewModel.totalCost)"
     }
+    
     //MARK: - function...
     func setupDelegate(){
         cartView.cartCollectionView.delegate = self
@@ -76,10 +77,17 @@ extension CartViewController: UICollectionViewDelegate,UICollectionViewDataSourc
 }
 //MARK: - Cart View model delegate
 extension CartViewController: CartViewModelDelegate{
+    // for error handeling
     func errorHapped(_ error: Error) {
         print(error.localizedDescription)
-
     }
+    // for if there is no products in cart...
+    func emprtyProductsMessage(error: String) {
+        Alert.alertMessage(title: "Error❌", message: error, vc: self)
+        cartView.cartCollectionView.isHidden = true
+        cartView.cartEmptyImage.isHidden = false
+    }
+    // for getting Number of cart in cart list from firebase...
     func didFetchCartCountSuccessful() {
         if let cartCount = cartViewModel.cart?.count {
             if cartCount == 0 {
@@ -89,33 +97,36 @@ extension CartViewController: CartViewModelDelegate{
             }
         }
     }
-    
+    // getting products from firebase
+    func didFetchProductsFromCartSuccessful() {
+        DispatchQueue.main.async { [weak self] in
+            self?.cartView.cartCollectionView.reloadData()
+        }
+        // for image empty
+        cartView.cartCollectionView.isHidden = false
+        cartView.cartEmptyImage.isHidden = true
+    }
+    // for updating (+ , - button or remove btn)...
     func didUpdateCartSuccessful() {
         cartViewModel.fetchCart()
     }
-    
-    func didFetchProductsFromCartSuccessful() {
-        cartView.cartCollectionView.reloadData()
-    }
-    
+    // get the total cost
     func didFetchCostAccToItemCount() {
         cartView.priceLabel.text = "$\(cartViewModel.totalCost)"
     }
-    
-    
-    
+    // fetch single roduct by the id
     func didFetchSingleProduct(_ product: Product) {
         let controller = ProductDetailViewController(product: product)
         navigationController?.pushViewController(controller, animated: true)
     }
-    
+    // when checkout the cart
     func didCheckoutSuccessful() {
         let checkoutVC = CheckoutViewController()
         checkoutVC.modalPresentationStyle = .custom
         checkoutVC.transitioningDelegate = self
         self.present(checkoutVC, animated: true, completion: nil)
     }
-    
+    // when didnt checkout the cart
     func didCheckoutNotSuccessful() {
         let checkoutVC = CheckoutViewController()
         checkoutVC.modalPresentationStyle = .custom

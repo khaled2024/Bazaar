@@ -526,7 +526,6 @@
 		EA845C7629C49CC200CFA67F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				EA41E59729D2531E00383A4C /* Filter */,
 				EA845C7729C49CE400CFA67F /* Onboarding */,
 				EA845C9429C4B62400CFA67F /* Auth */,
 				EA8A83CA29C5E0D400AA10DA /* ForgetPassword */,
@@ -534,11 +533,12 @@
 				EA3DB5FE29C73C8300E6790B /* Home */,
 				EA83C56729CB09AE00BE44FA /* SpecialProducts */,
 				EA16242329CC488F00EF3457 /* ProductDetail */,
-				EA3DB60129C73C9E00E6790B /* Search */,
 				EA3DB60029C73C9900E6790B /* Profile */,
+				EA3DB60129C73C9E00E6790B /* Search */,
 				EA3DB5FF29C73C9400E6790B /* Cart */,
-				EA41E58829D24E6F00383A4C /* Checkout */,
 				EAF95F9D29CA6A81001A19FE /* Wishlist */,
+				EA41E58829D24E6F00383A4C /* Checkout */,
+				EA41E59729D2531E00383A4C /* Filter */,
 			);
 			path = Screens;
 			sourceTree = "<group>";

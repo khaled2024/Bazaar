@@ -32,7 +32,7 @@ final class WishlistViewModel{
         didSet {
             guard let wishList = wishList else { return }
             if wishList.isEmpty == true {
-                delegate?.emprtyProductsMessage(error: "No Products Please add some wishList Products:)")
+                delegate?.emprtyProductsMessage(error: "No Products! Please add some Products to WishList 😁")
             } else {
                 fetchProductFromFireStoreCollection(wishList: wishList)
             }

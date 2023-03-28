@@ -14,6 +14,8 @@ protocol CartViewInterface: AnyObject {
 final class CartView: UIView{
     weak var interface: CartViewInterface?
     var cartCollectionView = CustomCollection(backgroundColor: .backgroundColor, cornerRadius: 15, showsScrollIndicator: false ,layout: UICollectionViewFlowLayout(), scrollDirection: .vertical)
+    var cartEmptyImage = CustomImageView(image: UIImage(named: "emptyWishlist"), bacgroundColor: .backgroundColor, contentMode: .scaleAspectFit)
+    
     private var checkoutView = CustomView(backgroundColor: .backgroundColor)
     private var priceTitle = CustomLabel(text: "Total price", numberOfLines: 0, font: FiraSana.bold.rawValue, size: 14, textColor: .secondaryLabel, textAlignment: .left)
     var priceLabel = CustomLabel(text: "", numberOfLines: 0, font: FiraSana.bold.rawValue, size: 22, textColor: .label, textAlignment: .center)
@@ -26,6 +28,8 @@ final class CartView: UIView{
         addSubview()
         setupConstraints()
         addTarget()
+        cartEmptyImage.isHidden = true
+        cartCollectionView.isHidden = false
     }
     
     required init?(coder: NSCoder) {
@@ -50,7 +54,7 @@ extension CartView {
     //MARK: - AddSubview
     
     private func addSubview() {
-        addSubViews([cartCollectionView, checkoutView])
+        addSubViews([cartCollectionView, checkoutView,cartEmptyImage])
     }
     
     private func addPriceLabelsToStackView() {
@@ -79,6 +83,12 @@ extension CartView {
             make.trailing.equalTo(safeAreaLayoutGuide.snp.trailing).offset(-10)
             make.bottom.equalTo(checkoutView.snp.top).offset(-10)
         }
+        cartEmptyImage.snp.makeConstraints { make in
+            make.width.height.equalTo(300)
+            make.centerX.equalTo(safeAreaLayoutGuide.snp.centerX)
+            make.centerY.equalTo(safeAreaLayoutGuide.snp.centerY).offset(-30)
+        }
+        
     }
     
     private func checkoutViewConstraints() {
