@@ -13,6 +13,21 @@ A native ios mobile application ,E-commerce application presents products from d
 -  checkout the Cart product.
 -  All this stuff update in real time in Firebase.
 
+## Key Features
+— Support: iOS 13+
+
+– Architecture: MVVM
+
+– UI: Custom Components – Full Programmatic(SnapKit)
+
+– Memory: No Retain Cycles
+
+– Backend: Firebase(FirebaseAuth, FirestoreDatabase, FirebaseStorage)
+
+– Networking: Alamofire
+
+– 3rd party libraries: Snapkit
+
 # Video Demo :-
 https://user-images.githubusercontent.com/57367756/228275893-cc58c578-af84-4463-a12c-867601349d66.mp4
 
