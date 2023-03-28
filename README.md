@@ -32,7 +32,8 @@ A native ios mobile application ,E-commerce application presents products from d
 
 
 ## SceenShots :-
-![Simulator Screenshot - iPhone 12 Pro - 2023-03-28 at 16 33 46](https://user-images.githubusercontent.com/57367756/228281778-f8c928e5-fa54-4914-8317-3585ca5b1074.png)
+![Simulator Screenshot - iPhone 12 Pro - 2023-03-28 at 16 33 46](https://user-images.githubusercontent.com/57367756/228282068-3efc522a-d7d7-410d-9ef2-b03e4f915c02.png)
+
 
 
 
