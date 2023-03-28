@@ -1,4 +1,4 @@
-# Bazaar
+# BaZzar
 BaZzar :)
 
 
