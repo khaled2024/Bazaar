@@ -66,6 +66,13 @@ extension SpecialProductViewController: UICollectionViewDelegate,UICollectionVie
         let size = CGSize(width: specialProductsView.procustsCollectionView.frame.width, height: specialProductsView.procustsCollectionView.frame.width/2 - 10)
         return size
     }
+    //for animations
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+        UIView.animate(withDuration: 0.35) {
+            cell.layer.transform = CATransform3DMakeScale(1, 1, 1)
+        }
+    }
 }
 //MARK: - SpecialProductViewModel delegate
 extension SpecialProductViewController: SpecialProductViewModelDelegate{

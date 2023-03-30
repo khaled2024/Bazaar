@@ -93,6 +93,7 @@ extension HomeViewController: UISearchBarDelegate{
 }
 //MARK: - (Special,Category,Products) delegation and data source...
 extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSource,UICollectionViewDelegateFlowLayout{
+    
     //MARK: - Number of Item
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch collectionView{
@@ -156,7 +157,14 @@ extension HomeViewController: UICollectionViewDelegate,UICollectionViewDataSourc
     // This only selects the first cell
     // Will Display
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        
         switch collectionView{
+        case homeView.productsCollection:
+            //for animations
+            cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+            UIView.animate(withDuration: 0.35) {
+                cell.layer.transform = CATransform3DMakeScale(1, 1, 1)
+            }
         case homeView.specialCollection:
             homeView.currentPage = indexPath.row
             let selectedIndexPath = IndexPath(item: 0, section: 0)

@@ -156,7 +156,13 @@ extension SearchController: UICollectionViewDelegate, UICollectionViewDataSource
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: searchView.searchCollection.frame.width / 2 - 10, height: searchView.searchCollection.frame.width / 1.5 )
-        
+    }
+    //for animations
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+        UIView.animate(withDuration: 0.35) {
+            cell.layer.transform = CATransform3DMakeScale(1, 1, 1)
+        }
     }
 }
 

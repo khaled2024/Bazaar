@@ -74,6 +74,13 @@ extension CartViewController: UICollectionViewDelegate,UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: cartView.cartCollectionView.frame.width - 10, height: 130)
     }
+    //for animations
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cell.layer.transform = CATransform3DMakeScale(0.1, 0.1, 1)
+        UIView.animate(withDuration: 0.35) {
+            cell.layer.transform = CATransform3DMakeScale(1, 1, 1)
+        }
+    }
 }
 //MARK: - Cart View model delegate
 extension CartViewController: CartViewModelDelegate{
