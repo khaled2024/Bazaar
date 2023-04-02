@@ -106,9 +106,7 @@ extension CartViewController: CartViewModelDelegate{
     }
     // getting products from firebase
     func didFetchProductsFromCartSuccessful() {
-        DispatchQueue.main.async { [weak self] in
-            self?.cartView.cartCollectionView.reloadData()
-        }
+            self.cartView.cartCollectionView.reloadData()
         // for image empty
         cartView.cartCollectionView.isHidden = false
         cartView.cartEmptyImage.isHidden = true

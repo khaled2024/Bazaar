@@ -92,8 +92,6 @@ extension FilterController: FilterViewModelDelegate {
     func didFetchAllCategoriesSuccessful() {
         filterView.filterCollection.reloadData()
     }
-    
-    
 }
 
 

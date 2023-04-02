@@ -208,8 +208,8 @@ extension HomeViewController: HomeViewInterface{
         print("Tapped Cart Btn")
         let cartVC = CartViewController()
         navigationController?.pushViewController(cartVC, animated: false)
-//        tabBarController?.selectedIndex = 2
-       
+        //        tabBarController?.selectedIndex = 2
+        
     }
     func TappedOnFavoriteBtn(_ view: HomeView, favoriteBtnTapped button: UIButton) {
         print("Tapped Favorite Btn")
@@ -224,25 +224,19 @@ extension HomeViewController:ProductsViewModelDelegation{
         print("Error :( \(error.localizedDescription)")
     }
     func didFetchSpecialProductsSuccessful() {
-        homeView.pageController.numberOfPages = productsViewModel.specialsProducts.count
         DispatchQueue.main.async {[weak self] in
-            self?.homeView.specialCollection.reloadData()
+            self?.homeView.pageController.numberOfPages = self?.productsViewModel.specialsProducts.count ?? 0
         }
+        self.homeView.specialCollection.reloadData()
     }
     func didFetchCategoriesSuccessful() {
-        DispatchQueue.main.async {[weak self] in
-            self?.homeView.categoryCollection.reloadData()
-        }
+            self.homeView.categoryCollection.reloadData()
     }
     func didFetchAllProductsSuccessful() {
-        DispatchQueue.main.async {[weak self] in
-            self?.homeView.productsCollection.reloadData()
-        }
+            self.homeView.productsCollection.reloadData()
     }
     func didFetchProductsByCategorySuccessful() {
-        DispatchQueue.main.async {[weak self] in
-            self?.homeView.productsCollection.reloadData()
-        }
+            self.homeView.productsCollection.reloadData()
     }
     func didFetchSingleProductSuccessful(_ product: Product) {
         let productDetailVC = ProductDetailViewController(product: product)

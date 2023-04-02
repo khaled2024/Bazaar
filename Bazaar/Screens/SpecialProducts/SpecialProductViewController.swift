@@ -85,9 +85,7 @@ extension SpecialProductViewController: SpecialProductViewModelDelegate{
         print(error.localizedDescription)
     }
     func didFetchAllSpecialProductsSuccessfully() {
-        DispatchQueue.main.async {[weak self] in
-            self?.specialProductsView.procustsCollectionView.reloadData()
-        }
+            self.specialProductsView.procustsCollectionView.reloadData()
     }
     
 }
